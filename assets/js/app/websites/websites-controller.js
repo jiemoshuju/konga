@@ -36,17 +36,29 @@
               $scope.submit = function () {
                 var data = angular.copy($scope.data);
                 console.log(data)
-                WebsiteModel.create(data)
-                  .then(function (resp) {
-                    console.log('Success', resp.data);
-                    $uibModalInstance.dismiss({
-                      data: resp
-                    })
-                  }).catch(function (err) {
-                  console.error('Error', err);
-                  handleErrors(err)
-                })
-
+                if (data.id) {
+                  WebsiteModel.update(data.id,data)
+                    .then(function (resp) {
+                      console.log('Success', resp.data);
+                      $uibModalInstance.dismiss({
+                        data: resp
+                      })
+                    }).catch(function (err) {
+                    console.error('Error', err);
+                    handleErrors(err)
+                  })
+                } else {
+                  WebsiteModel.create(data)
+                    .then(function (resp) {
+                      console.log('Success', resp.data);
+                      $uibModalInstance.dismiss({
+                        data: resp
+                      })
+                    }).catch(function (err) {
+                    console.error('Error', err);
+                    handleErrors(err)
+                  })
+                }
               }
 
 
